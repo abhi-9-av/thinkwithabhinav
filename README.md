@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# thinkwithabhinav.in — Cinematic Scroll Hero Experience
 
-## Getting Started
+A scroll-driven cinematic portfolio experience built with **React 18**, **Vite**, **TypeScript**, **Tailwind CSS**, **GSAP (ScrollTrigger)**, **Lenis**, and **HTML5 Canvas 2D**.
 
-First, run the development server:
+---
+
+## 🎬 Narrative Concept: "Chaos to Clarity"
+
+The experience tells the story of a student navigating a chaotic network of scattered interests before everything collapses into a singular purpose:
+
+1. **Phase 1: The Descent (`progress: 0.00 – 0.15`)**
+   - Cosmic space backdrop (`#05060d`) with a twinkling starfield.
+   - Constellation network of 150+ drifting nodes with distance-based dynamic connections shifting across purple, teal, and soft green.
+   - 12 frosted glass floating pills with glowing themes (`DSA`, `AI`, `FINANCE`, `LOST?`, `DEVELOPER`, `CONTENT`, `MUSIC`, `ART`, `DESIGN`).
+   - 3D student character free-falling in zero-G with subtle floating bob/rotation and mouse parallax.
+   - Frosted glass navbar pill at top center (`HOME`, `ABOUT`, `JOURNEY`).
+   - "SCROLL TO EXPLORE" hint with animated mouse icon.
+
+2. **Phase 2: The Swarm (`progress: 0.15 – 0.45`)**
+   - Scroll hint text transitions to "SCROLLING DOWN...".
+   - A glowing spiral vortex of motion-blurred arcs (teal, cyan, violet, green) spins around the character.
+   - Rotation speed and streak length accelerate with scroll progress.
+   - Constellation nodes and floating labels get gravitationally pulled toward the center.
+
+3. **Phase 2.5: The Singularity (`progress: 0.45 – 0.70`)**
+   - Labels and network collapse inward.
+   - Stretched/motion-blurred text fragments (`DATA STREAM`, `AI CONTENT`, `DEVELOPER`, `FINANCE`, `LOST?`) spiral into the center.
+   - Character shrinks and is swallowed by the singularity core.
+   - Blazing radiant white-to-warm-orange core with 32 radial light rays, swirling fiery sparks, cyan/purple filament rings, and bokeh orbs.
+   - Peak brightness at progress `~0.62` with a quick white flash that dissolves cleanly into pure black.
+
+4. **Phase 3: The Resolution (`progress: 0.70 – 1.00`)**
+   - Deep pure black space (`#000000`) with a subtle ground reflection glow.
+   - Massive **"B.Tech"** typography (Anton font) revealed via letter-by-letter mask slide-up.
+   - Character emerges standing calmly on the right, arms crossed, leaning against the letter **"h"**.
+   - Monospace typewriter reveal: `"MY JOURNEY AS A B.TECH STUDENT..."`.
+   - Outlined `"LEARN MORE"` pill button (fills white on hover) that smooth-scrolls to the next section.
+   - Navbar smoothly morphs from glass pill to minimalist text links.
+
+---
+
+## 🚀 Quick Start
 
 ```bash
+# In the project directory:
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Or from workspace root:
+npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ How to Tweak Timings, Colors & Labels
 
-## Learn More
+### 1. Adjusting Floating Labels & Colors
+Open [`src/config/labels.ts`](./src/config/labels.ts):
+- **Change label text**: Update `text: 'YOUR_LABEL'`.
+- **Change position**: Modify `x` and `y` (percentage 0 to 100).
+- **Change color theme**: Choose from `'blue' | 'indigo' | 'green' | 'teal' | 'purple' | 'pink'`.
+- **Float timing**: Adjust `floatSpeed` (seconds per oscillation) and `floatDistance` (px amplitude).
 
-To learn more about Next.js, take a look at the following resources:
+### 2. Adjusting Timeline Progress Boundaries
+Open [`src/components/HeroScene.tsx`](./src/components/HeroScene.tsx):
+- **Scroll Length**: Change `end: '+=400%'` (increase for slower scrubbing, decrease for faster).
+- **Scrub Damping**: Modify `scrub: 0.4` in `ScrollTrigger.create`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To tune specific phase thresholds:
+- **Phase 1 to Phase 2 transition**: Look for `p >= 0.15` in `ParticleCanvas.tsx`, `FloatingLabel.tsx`, and `ScrollHint.tsx`.
+- **Phase 2.5 Singularity peak**: Controlled around `p = 0.62` in `ParticleCanvas.tsx` (`singIntensity` and flash calculation).
+- **Phase 3 Resolution start**: `p >= 0.68` in `ResolutionSection.tsx`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3. Replacing Character Assets
+Drop your transparent background PNGs into `public/assets/`:
+- `public/assets/character-falling.png` (Character free-falling)
+- `public/assets/character-standing.png` (Character leaning calmly)
 
-## Deploy on Vercel
+The app automatically renders them with responsive scaling and drop shadows.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ⚡ Performance & Accessibility Highlights
+- **60 FPS Canvas Loop**: Particle calculations and transformations run decoupled from React re-renders using a shared mutable `progressRef`.
+- **DPR Capping**: Capped at `Math.min(window.devicePixelRatio, 2)` to eliminate GPU thermal throttling on high-DPI displays.
+- **Tab Visibility Pause**: Listens to `document.visibilitychange` to automatically halt animation frames when the tab is backgrounded.
+- **Prefers-Reduced-Motion**: Respects user OS accessibility preferences with a smooth crossfade mode.
+- **Lenis Smooth Scroll**: Bound to GSAP's RAF ticker with `lagSmoothing(0)` for buttery smooth scrolling.

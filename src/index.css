@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #05060d;
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom glow helpers */
+.text-glow-blue {
+  text-shadow: 0 0 12px rgba(59, 130, 246, 0.7);
+}
+.text-glow-green {
+  text-shadow: 0 0 12px rgba(34, 197, 94, 0.7);
+}
+.text-glow-purple {
+  text-shadow: 0 0 12px rgba(168, 85, 247, 0.7);
+}
+.text-glow-teal {
+  text-shadow: 0 0 12px rgba(45, 212, 191, 0.7);
+}
+.text-glow-pink {
+  text-shadow: 0 0 12px rgba(244, 114, 182, 0.7);
+}
+
+/* Glass effect */
+.glass-pill {
+  background: rgba(18, 24, 38, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Smooth hide scrollbars for clean presentation */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #05060d;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
