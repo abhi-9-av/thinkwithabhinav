@@ -38,3 +38,4 @@ jobs:
           publish_dir: ./dist
           # Force a fresh gh-pages branch (orphan) each deploy
           force_orphan: true
+
