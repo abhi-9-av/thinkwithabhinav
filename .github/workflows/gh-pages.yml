@@ -3,14 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-    # Re-run when any source files change
-    paths:
-      - 'src/**'
-      - 'public/**'
-      - 'vite.config.ts'
-      - 'package.json'
-      - 'tailwind.config.js'
-      - 'postcss.config.js'
 
 jobs:
   build-and-deploy:
@@ -36,6 +28,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          # Force a fresh gh-pages branch (orphan) each deploy
           force_orphan: true
-
