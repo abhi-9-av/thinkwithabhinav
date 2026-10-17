@@ -135,7 +135,7 @@ export const ResolutionSection: React.FC<ResolutionSectionProps> = ({ progressRe
           >
             <div className="relative w-full aspect-[165/375] filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.9)]">
               <img
-                src="/assets/character-standing.png"
+                src={`${import.meta.env.BASE_URL}assets/character-standing.png`}
                 alt="Student standing calmly leaning on B.Tech"
                 loading="lazy"
                 className="w-full h-full object-contain pointer-events-none select-none"
