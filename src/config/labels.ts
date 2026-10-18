@@ -1,184 +1,150 @@
-export interface LabelConfig {
+// ──────────────────────────────────────────────────────
+// Graph Config — Obsidian-style knowledge graph
+// Each node has a category (determines color), a size tier,
+// and explicit connections (edges) to other nodes by id.
+// Positions are in % of viewport.  Edit freely.
+// ──────────────────────────────────────────────────────
+
+export type NodeCategory =
+  | 'hub'        // central "Start here" — largest, purple
+  | 'learn'      // learning topics — purple/magenta
+  | 'college'    // college/institutional — green
+  | 'content'    // content creation — amber/gold
+  | 'build'      // building / projects — blue
+  | 'stack'      // tech stack — blue/indigo
+  | 'explore'    // misc exploration — teal
+  | 'lost';      // existential / scattered — pink/gray
+
+export interface GraphNode {
   id: string;
-  text: string;
-  // Position as percentage of viewport (0 to 100)
-  x: number;
-  y: number;
-  // Color theme
-  theme: 'blue' | 'indigo' | 'green' | 'teal' | 'purple' | 'pink';
-  // Animation parameters
-  floatSpeed: number;     // seconds per float cycle
-  floatDistance: number;  // px vertical travel
-  floatPhase: number;     // initial radian offset
-  hideOnMobile?: boolean; // hide on smaller screens to prevent clutter
+  label: string;
+  x: number;            // % of viewport width
+  y: number;            // % of viewport height
+  category: NodeCategory;
+  /** 'lg' = 14px dot, 'md' = 9px dot, 'sm' = 6px dot */
+  size: 'lg' | 'md' | 'sm';
+  hideOnMobile?: boolean;
 }
 
-export const LABELS_CONFIG: LabelConfig[] = [
-  {
-    id: 'dsa',
-    text: 'DSA',
-    x: 30,
-    y: 23,
-    theme: 'blue',
-    floatSpeed: 4.2,
-    floatDistance: 12,
-    floatPhase: 0.5,
-  },
-  {
-    id: 'ai',
-    text: 'AI',
-    x: 42,
-    y: 22,
-    theme: 'indigo',
-    floatSpeed: 3.8,
-    floatDistance: 10,
-    floatPhase: 1.2,
-  },
-  {
-    id: 'finance-top',
-    text: 'FINANCE',
-    x: 61,
-    y: 19,
-    theme: 'green',
-    floatSpeed: 4.5,
-    floatDistance: 14,
-    floatPhase: 2.1,
-  },
-  {
-    id: 'lost-top',
-    text: 'LOST?',
-    x: 74,
-    y: 29,
-    theme: 'pink',
-    floatSpeed: 3.5,
-    floatDistance: 12,
-    floatPhase: 3.4,
-  },
-  {
-    id: 'developer',
-    text: 'DEVELOPER',
-    x: 81,
-    y: 49,
-    theme: 'green',
-    floatSpeed: 4.0,
-    floatDistance: 15,
-    floatPhase: 0.8,
-  },
-  {
-    id: 'content-1',
-    text: 'CONTENT',
-    x: 67,
-    y: 75,
-    theme: 'teal',
-    floatSpeed: 3.6,
-    floatDistance: 11,
-    floatPhase: 1.9,
-  },
-  {
-    id: 'content-2',
-    text: 'CONTENT',
-    x: 79,
-    y: 75,
-    theme: 'green',
-    floatSpeed: 4.4,
-    floatDistance: 13,
-    floatPhase: 4.1,
-    hideOnMobile: true,
-  },
-  {
-    id: 'lost-bottom',
-    text: 'LOST?',
-    x: 57,
-    y: 77,
-    theme: 'purple',
-    floatSpeed: 3.9,
-    floatDistance: 12,
-    floatPhase: 2.7,
-  },
-  {
-    id: 'finance-bottom',
-    text: 'FINANCE',
-    x: 33,
-    y: 77,
-    theme: 'blue',
-    floatSpeed: 4.1,
-    floatDistance: 13,
-    floatPhase: 5.2,
-  },
-  {
-    id: 'design',
-    text: 'DESIGN',
-    x: 17,
-    y: 69,
-    theme: 'purple',
-    floatSpeed: 3.7,
-    floatDistance: 14,
-    floatPhase: 0.3,
-  },
-  {
-    id: 'art',
-    text: 'ART',
-    x: 22,
-    y: 58,
-    theme: 'pink',
-    floatSpeed: 4.6,
-    floatDistance: 10,
-    floatPhase: 3.0,
-  },
-  {
-    id: 'music',
-    text: 'MUSIC',
-    x: 18,
-    y: 42,
-    theme: 'purple',
-    floatSpeed: 4.3,
-    floatDistance: 12,
-    floatPhase: 1.6,
-  },
-];
+export interface GraphEdge {
+  from: string;   // node id
+  to: string;     // node id
+}
 
-export const THEME_STYLES = {
-  blue: {
-    border: 'border-blue-400/40',
-    glow: 'shadow-[0_0_20px_rgba(59,130,246,0.4)]',
-    text: 'text-blue-200',
-    dot: 'bg-blue-400',
-    bg: 'bg-blue-950/40',
-  },
-  indigo: {
-    border: 'border-indigo-400/40',
-    glow: 'shadow-[0_0_20px_rgba(99,102,241,0.4)]',
-    text: 'text-indigo-200',
-    dot: 'bg-indigo-400',
-    bg: 'bg-indigo-950/40',
-  },
-  green: {
-    border: 'border-emerald-400/40',
-    glow: 'shadow-[0_0_20px_rgba(52,211,153,0.4)]',
-    text: 'text-emerald-200',
-    dot: 'bg-emerald-400',
-    bg: 'bg-emerald-950/40',
-  },
-  teal: {
-    border: 'border-teal-400/40',
-    glow: 'shadow-[0_0_20px_rgba(45,212,191,0.4)]',
-    text: 'text-teal-200',
-    dot: 'bg-teal-400',
-    bg: 'bg-teal-950/40',
-  },
-  purple: {
-    border: 'border-purple-400/40',
-    glow: 'shadow-[0_0_20px_rgba(192,132,252,0.4)]',
-    text: 'text-purple-200',
-    dot: 'bg-purple-400',
-    bg: 'bg-purple-950/40',
-  },
-  pink: {
-    border: 'border-pink-400/40',
-    glow: 'shadow-[0_0_20px_rgba(244,114,182,0.4)]',
-    text: 'text-pink-200',
-    dot: 'bg-pink-400',
-    bg: 'bg-pink-950/40',
-  },
+// ─── Color palette per category ───────────────────────
+export const CATEGORY_COLORS: Record<NodeCategory, { dot: string; label: string; glow: string }> = {
+  hub:     { dot: '#a78bfa', label: '#c4b5fd', glow: 'rgba(167,139,250,0.5)' },  // violet
+  learn:   { dot: '#c084fc', label: '#d8b4fe', glow: 'rgba(192,132,252,0.35)' },  // purple
+  college: { dot: '#34d399', label: '#6ee7b7', glow: 'rgba(52,211,153,0.35)' },   // emerald
+  content: { dot: '#a18249', label: '#c9a96e', glow: 'rgba(161,130,73,0.35)' },   // warm gold
+  build:   { dot: '#60a5fa', label: '#93c5fd', glow: 'rgba(96,165,250,0.35)' },   // blue
+  stack:   { dot: '#818cf8', label: '#a5b4fc', glow: 'rgba(129,140,248,0.35)' },  // indigo
+  explore: { dot: '#2dd4bf', label: '#5eead4', glow: 'rgba(45,212,191,0.35)' },   // teal
+  lost:    { dot: '#9ca3af', label: '#d1d5db', glow: 'rgba(156,163,175,0.25)' },  // gray
 };
 
+// ─── Dot pixel sizes ─────────────────────────────────
+export const DOT_SIZES: Record<'lg' | 'md' | 'sm', number> = {
+  lg: 14,
+  md: 9,
+  sm: 6,
+};
+
+// ─── Nodes ───────────────────────────────────────────
+export const GRAPH_NODES: GraphNode[] = [
+  // Hub — center
+  { id: 'start',           label: 'Start here',         x: 48, y: 54, category: 'hub',     size: 'lg' },
+
+  // Learn cluster (upper-center)
+  { id: 'learn',           label: 'Learn',              x: 42, y: 32, category: 'learn',    size: 'md' },
+  { id: 'backend-dev',     label: 'Backend Dev',        x: 50, y: 22, category: 'learn',    size: 'sm' },
+  { id: 'kali-linux',      label: 'Kali Linux',         x: 52, y: 38, category: 'learn',    size: 'sm' },
+  { id: 'cybersecurity',   label: 'Cybersecurity',      x: 63, y: 30, category: 'learn',    size: 'sm', hideOnMobile: true },
+
+  // Content cluster (left)
+  { id: 'content',         label: 'Content',            x: 32, y: 36, category: 'content',  size: 'md' },
+  { id: 'minecraft',       label: 'Minecraft Shorts',   x: 40, y: 25, category: 'content',  size: 'sm', hideOnMobile: true },
+  { id: 'linkedin',        label: 'LinkedIn',           x: 26, y: 26, category: 'content',  size: 'sm' },
+  { id: 'youtube',         label: 'YouTube',            x: 40, y: 42, category: 'content',  size: 'sm' },
+  { id: 'floating-chars',  label: 'Floating Characters',x: 36, y: 42, category: 'content',  size: 'sm', hideOnMobile: true },
+  { id: 'chaotic',         label: 'Chaotic Abhinav',    x: 33, y: 48, category: 'content',  size: 'sm' },
+
+  // College cluster (right)
+  { id: 'college',         label: 'College',            x: 62, y: 46, category: 'college',  size: 'md' },
+  { id: 'dept-of-tech',    label: 'Dept of Tech',       x: 70, y: 32, category: 'college',  size: 'sm', hideOnMobile: true },
+  { id: 'bennett',         label: 'Bennett B.Tech',     x: 74, y: 42, category: 'college',  size: 'sm' },
+  { id: 'gssoc',           label: 'GSSoC',              x: 36, y: 50, category: 'college',  size: 'sm', hideOnMobile: true },
+
+  // Build cluster (center-right-bottom)
+  { id: 'build',           label: 'Build',              x: 56, y: 64, category: 'build',    size: 'md' },
+  { id: 'cleardrive',      label: 'ClearDrive',         x: 59, y: 54, category: 'build',    size: 'sm' },
+  { id: 'python',          label: 'Python',             x: 52, y: 60, category: 'build',    size: 'sm' },
+  { id: 'esp8266',         label: 'ESP8266 LED',        x: 68, y: 60, category: 'build',    size: 'sm', hideOnMobile: true },
+  { id: 'kuru-ai',         label: 'Kuru AI',            x: 44, y: 66, category: 'build',    size: 'sm' },
+
+  // Stack cluster (bottom-center)
+  { id: 'stack',           label: 'Stack',              x: 46, y: 74, category: 'stack',    size: 'md' },
+  { id: 'react',           label: 'React',              x: 35, y: 78, category: 'stack',    size: 'sm' },
+  { id: 'portfolio',       label: 'Portfolio',          x: 48, y: 80, category: 'stack',    size: 'sm' },
+  { id: 'obsidian',        label: 'Obsidian',           x: 58, y: 80, category: 'stack',    size: 'sm' },
+  { id: 'ollama',          label: 'Ollama',             x: 38, y: 84, category: 'stack',    size: 'sm', hideOnMobile: true },
+  { id: 'tailscale',       label: 'Tailscale',          x: 34, y: 66, category: 'stack',    size: 'sm', hideOnMobile: true },
+  { id: 'cloudflare',      label: 'Cloudflare',         x: 48, y: 88, category: 'stack',    size: 'sm', hideOnMobile: true },
+];
+
+// ─── Edges (connections) ─────────────────────────────
+export const GRAPH_EDGES: GraphEdge[] = [
+  // Hub connections to all category nodes
+  { from: 'start', to: 'learn' },
+  { from: 'start', to: 'content' },
+  { from: 'start', to: 'college' },
+  { from: 'start', to: 'build' },
+  { from: 'start', to: 'stack' },
+  { from: 'start', to: 'cleardrive' },
+
+  // Learn sub-tree
+  { from: 'learn', to: 'backend-dev' },
+  { from: 'learn', to: 'kali-linux' },
+  { from: 'learn', to: 'cybersecurity' },
+  { from: 'learn', to: 'minecraft' },
+
+  // Content sub-tree
+  { from: 'content', to: 'linkedin' },
+  { from: 'content', to: 'minecraft' },
+  { from: 'content', to: 'youtube' },
+  { from: 'content', to: 'floating-chars' },
+  { from: 'content', to: 'chaotic' },
+  { from: 'content', to: 'learn' },
+
+  // College sub-tree
+  { from: 'college', to: 'dept-of-tech' },
+  { from: 'college', to: 'bennett' },
+  { from: 'college', to: 'gssoc' },
+  { from: 'college', to: 'cybersecurity' },
+  { from: 'college', to: 'build' },
+
+  // Build sub-tree
+  { from: 'build', to: 'cleardrive' },
+  { from: 'build', to: 'python' },
+  { from: 'build', to: 'esp8266' },
+  { from: 'build', to: 'kuru-ai' },
+  { from: 'build', to: 'stack' },
+
+  // Stack sub-tree
+  { from: 'stack', to: 'react' },
+  { from: 'stack', to: 'portfolio' },
+  { from: 'stack', to: 'obsidian' },
+  { from: 'stack', to: 'ollama' },
+  { from: 'stack', to: 'tailscale' },
+  { from: 'stack', to: 'cloudflare' },
+  { from: 'stack', to: 'kuru-ai' },
+
+  // Cross-links (the web effect)
+  { from: 'python', to: 'kuru-ai' },
+  { from: 'react', to: 'portfolio' },
+  { from: 'backend-dev', to: 'python' },
+  { from: 'youtube', to: 'floating-chars' },
+  { from: 'gssoc', to: 'chaotic' },
+  { from: 'linkedin', to: 'learn' },
+  { from: 'portfolio', to: 'obsidian' },
+];

@@ -6,7 +6,7 @@ import { FloatingLabel } from './FloatingLabel';
 import { CharacterLayer } from './CharacterLayer';
 import { ResolutionSection } from './ResolutionSection';
 import { ScrollHint } from './ScrollHint';
-import { LABELS_CONFIG } from '../config/labels';
+import { GRAPH_NODES } from '../config/labels';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -82,10 +82,10 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ onLearnMoreClick, progress
 
         {/* Floating Concept Labels (Phase 1 & 2) */}
         <div className="absolute inset-0 pointer-events-none">
-          {LABELS_CONFIG.map((label) => (
+          {GRAPH_NODES.map((node) => (
             <FloatingLabel
-              key={label.id}
-              config={label}
+              key={node.id}
+              node={node}
               progressRef={progressRef}
             />
           ))}
