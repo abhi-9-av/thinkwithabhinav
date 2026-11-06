@@ -79,7 +79,7 @@ export const CharacterLayer: React.FC<CharacterLayerProps> = ({ progressRef, mou
         width: 'clamp(240px, 34vw, 440px)',
       }}
     >
-      <div className="relative w-full aspect-[345/260] filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.85)]">
+      <div className="relative w-full aspect-[875/594] filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.85)]">
         <img
           src={`${import.meta.env.BASE_URL}assets/character-falling.png`}
           alt="Student free-falling through ideas"

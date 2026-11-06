@@ -130,10 +130,10 @@ export const ResolutionSection: React.FC<ResolutionSectionProps> = ({ progressRe
             ref={characterRef}
             className="relative -ml-[2.5vw] md:-ml-[1.5vw] z-30 self-end mb-[0.5vw] will-change-transform"
             style={{
-              width: 'clamp(95px, 14vw, 195px)',
+              width: 'clamp(70px, 10vw, 140px)',
             }}
           >
-            <div className="relative w-full aspect-[165/375] filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.9)]">
+            <div className="relative w-full aspect-[382/1245] filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.9)]">
               <img
                 src={`${import.meta.env.BASE_URL}assets/character-standing.png`}
                 alt="Student standing calmly leaning on B.Tech"
